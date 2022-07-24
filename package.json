@@ -1,0 +1,90 @@
+{
+  "name": "cpp-class-helper",
+  "displayName": "CPP Class Helper",
+  "publisher": "pearlescen7",
+  "description": "An extension to create .hpp and .cpp files for a new class in the selected directories.",
+  "version": "0.0.6",
+  "engines": {
+    "vscode": "^1.68.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "configuration": [
+      {
+        "title": "cpp-class-helper",
+        "properties": {
+          "cpp-class-helper.srcFolderPath": {
+            "type": "string",
+            "default": null,
+            "description": "Source file directory for .cpp files."
+          },
+          "cpp-class-helper.includeFolderPath": {
+            "type": "string",
+            "default": null,
+            "description": "Include file directory for .hpp files."
+          },
+		      "cpp-class-helper.headerFileDefaultValue": {
+            "type": "string",
+            "default": "#ifndef __${class_name}_H__\n#define __${class_name}_H__\n\nclass ${class_name} \n{\npublic:\n\n\t${class_name}();\n\t${class_name}(const ${class_name}&) = default;\n\t${class_name}(${class_name}&&) = default;\n\t${class_name}& operator=(const ${class_name}&);\n\t${class_name}& operator=(${class_name}&&);\n\n\t~${class_name}();\n};\n\n#endif // __${class_name}_H__",
+            "description": "Default code for header files."
+          },
+          "cpp-class-helper.sourceFileDefaultValue": {
+            "type": "string",
+            "default": "#include \"${class_name}.hpp\"\n\n${class_name}::${class_name}()\n{\n\n}\n\n${class_name}::~${class_name}()\n{\n\n}",
+            "description": "Default code for source files."
+          }
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "cpp-class-helper.initialize",
+        "title": "Activate C++ Class Helper"
+      },
+      {
+        "command": "cpp-class-helper.createClassContextMenu",
+        "title": "Create New C++ Class"
+      },
+      {
+        "command": "cpp-class-helper.updateFoldersContextMenu",
+        "title": "Select New src/include Folders"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "cpp-class-helper.createClassContextMenu",
+          "group": "2_workspace",
+          "when": "resourceLangId == cpp"
+        },
+        {
+          "command": "cpp-class-helper.updateFoldersContextMenu",
+          "group": "2_workspace",
+          "when": "resourceLangId == cpp"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.68.0",
+    "@vscode/test-electron": "^2.1.3",
+    "eslint": "^8.16.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.7.2"
+  }
+}
